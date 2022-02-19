@@ -21,10 +21,6 @@ namespace Service.HotelFeatures.Commands
         public int Rate { get; set; }
         public string ImageUrl { get; set; }
 
-        public class Response : BaseResponse
-        {
-
-        }
         public class UpdateHotelCommandHandler : IRequestHandler<UpdateHotelCommand, Guid>
         {
             private readonly IApplicationDbContext _context;

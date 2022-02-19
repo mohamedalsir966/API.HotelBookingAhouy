@@ -20,10 +20,7 @@ namespace Service.HotelFeatures.Commands
          public ICollection<Facilities> Facilities { get; set; }
         public int Rate { get; set; }
         public string ImageUrl { get; set; }
-        public class Response : BaseResponse
-        {
-
-        }
+       
         public class CreateNewHotelCommandHandler : IRequestHandler<CreateNewHotelCommand, Guid?>
         {
             private readonly IApplicationDbContext _context;

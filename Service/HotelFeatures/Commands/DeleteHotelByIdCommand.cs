@@ -13,10 +13,7 @@ namespace Service.HotelFeatures.Commands
     {
         public Guid hotelId { get; set; }
 
-        public class Response : BaseResponse
-        {
-
-        }
+        
         public class DeleteHotelByIdCommandHandler : IRequestHandler<DeleteHotelByIdCommand, Guid>
         {
             private readonly IApplicationDbContext _context;
