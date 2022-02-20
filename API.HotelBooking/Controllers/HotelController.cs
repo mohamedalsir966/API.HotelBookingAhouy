@@ -59,20 +59,6 @@ namespace API.HotelBooking.Controllers
         {
             return Ok(await Mediator.Send(new DeleteHotelByIdCommand { hotelId = id }));
         }
-        /// <summary>
-        /// update hotel  by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, UpdateHotelCommand command)
-        {
-            if (id != command.hotelId)
-            {
-                return BadRequest();
-            }
-            return Ok(await Mediator.Send(command));
-        }
+       
     }
 }
