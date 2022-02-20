@@ -30,7 +30,11 @@ namespace UnitTest
         public async Task CanInsertHotelIntoDatabasee()
         {
             var GetHotel = new CreateNewHotelCommandHandler(MockContext.Object);
-            var objGetHotelquery = new CreateNewHotelCommand() { Name= HotelDataFake.MockCreateNewHotelCommand().Name };
+            var objGetHotelquery = new CreateNewHotelCommand() {
+                Name= HotelDataFake.MockCreateNewHotelCommand().Name,
+                Description = HotelDataFake.MockCreateNewHotelCommand().Description,
+                State= HotelDataFake.MockCreateNewHotelCommand().State
+            };
             var result = await GetHotel.Handle(objGetHotelquery, CancellationToken.None);
             Assert.NotNull(result);
         }
