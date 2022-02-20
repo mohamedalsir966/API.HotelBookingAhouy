@@ -27,6 +27,18 @@ namespace API.HotelBooking.Controllers
             return Ok(await Mediator.Send(command));
         }
         /// <summary>
+        /// SearchByName.
+        /// </summary>
+        /// <param name="hotilname"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("SearchByName")]
+        public async Task<IActionResult> GetHotilByName(string hotilname)
+        {
+            return Ok(await Mediator.Send(new SearchHotelQuery {HotelName= hotilname }));
+        }
+        /// <summary>
         /// get hotel  by id
         /// </summary>
         /// <param name="id"></param>
@@ -48,6 +60,8 @@ namespace API.HotelBooking.Controllers
         {
             return Ok(await Mediator.Send(new GetAllHotelQuery()));
         }
+
+       
         /// <summary>
         /// delte hotel  by id
         /// </summary>
