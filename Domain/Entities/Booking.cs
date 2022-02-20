@@ -12,7 +12,6 @@ namespace Domain.Entities
     {
         public Guid HotelId { get; set; }
         [ForeignKey(nameof(HotelId))]
-
         [Required(ErrorMessage = "Hotel Name is required")]
         public string CustomerName { get; set; }
         public DateTime CheckinDate { get; set; }
