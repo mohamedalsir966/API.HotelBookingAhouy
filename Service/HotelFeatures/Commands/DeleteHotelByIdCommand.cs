@@ -13,7 +13,6 @@ namespace Service.HotelFeatures.Commands
     {
         public Guid hotelId { get; set; }
 
-        
         public class DeleteHotelByIdCommandHandler : IRequestHandler<DeleteHotelByIdCommand, Guid?>
         {
             private readonly IApplicationDbContext _context;
@@ -25,6 +24,13 @@ namespace Service.HotelFeatures.Commands
             {
                 var hotel = _context.Hotel.Where(a => a.Id == request.hotelId).FirstOrDefault();
                 if (hotel == null) return default;
+                var faciliteshotel = _context.FacilitesHotel.Where(a => a.hotelId == request.hotelId);
+               
+                    foreach (var item in faciliteshotel)
+                    {
+                        _context.FacilitesHotel.Remove(item);
+                    }
+
                 _context.Hotel.Remove(hotel);
                 await _context.SaveChangesAsync();
                 return hotel.Id;
