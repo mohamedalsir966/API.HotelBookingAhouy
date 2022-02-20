@@ -22,7 +22,8 @@ namespace Service.HotelFeatures.Queries
             }
             public async Task<IEnumerable<Hotel>> Handle(GetAllHotelQuery request, CancellationToken cancellationToken)
             {
-                var hotels = await _context.Hotel.ToListAsync();
+                var hotels = await _context.Hotel.Include(a => a.Facilities).ToListAsync();
+                //var hotel = await _context.Hotel.Include(a=>a.Facilities).Where(a => a.Id == request.hotelId).FirstOrDefaultAsync();
                 if (hotels == null) return null;
                 return hotels;
             }

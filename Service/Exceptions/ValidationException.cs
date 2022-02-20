@@ -22,15 +22,7 @@ namespace Service.Exceptions
                 .Select(e => e.PropertyName)
                 .Distinct();
 
-            foreach (var propertyName in propertyNames)
-            {
-                //var propertyFailures = failures
-                //    .Where(e => e.PropertyName == propertyName)
-                //    .Select(e => e.ErrorMessage)
-                //    .TAPI.HotelBookingrray();
-
-                //Failures.Add(propertyName, propertyFailures);
-            }
+            
         }
 
         public IDictionary<string, string[]> Failures { get; }
