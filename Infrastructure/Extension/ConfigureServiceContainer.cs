@@ -17,7 +17,7 @@ namespace Infrastructure.Extension
              IConfiguration configuration, IConfigurationRoot configRoot)
         {
             serviceCollection.AddDbContext<ApplicationDbContext>(options =>
-                   options.UseSqlServer(configuration.GetConnectionString("OnionArchConn") ?? configRoot["ConnectionStrings:OnionArchConn"]
+                   options.UseSqlServer(configuration.GetConnectionString("HotelDBConn") ?? configRoot["ConnectionStrings:HotelDBConn"]
                 , b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
         public static void AddSwaggerOpenAPI(this IServiceCollection serviceCollection)
@@ -38,10 +38,5 @@ namespace Infrastructure.Extension
         {
             serviceCollection.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
         }
-        public static void AddController(this IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddControllers().AddNewtonsoftJson();
-        }
-
     }
 }
