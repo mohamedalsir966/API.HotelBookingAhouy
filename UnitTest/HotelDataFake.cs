@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Service.HotelFeatures.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +15,23 @@ namespace UnitTest
         {
             new Hotel()
             {
-                Id= new Guid("a50e83e0-f374-48ee-ac02-c95d2dfe6311"),
-                Name = "Hotel2",
-               
+                Id= new Guid("a50e83e0-f374-48ee-ac02-c95d2dfe6388"),
+                Name = "Name1",
+                State = "State1",
+                Description = "Description1"
+
             },
             new Hotel()
             {
-                Name = "Hotel",
-                
+                Id = new Guid("a50e83e0-f374-48ee-ac02-c95d2dfe6123"),
+                Name = "Name2",
+                State= "State2",
+                Description= "Description2"
             }
         };
-        
+
+        public static DeleteHotelByIdCommand MockDeleteHotelByIdCommand() => new() { hotelId = new Guid("a50e83e0-f374-48ee-ac02-c95d2dfe6123") };
+        public static CreateNewHotelCommand MockCreateNewHotelCommand() => new() { Name = "testname",State= "testState", Description= "testDescription" };
+
     }
 }
