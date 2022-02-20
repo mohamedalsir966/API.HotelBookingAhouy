@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using static Service.HotelFeatures.Commands.CreateNewHotelCommand;
+using static Service.HotelFeatures.Commands.DeleteHotelByIdCommand;
 using static Service.HotelFeatures.Queries.GetHotelByIdQuery;
 
 namespace UnitTest
@@ -29,7 +30,7 @@ namespace UnitTest
         public async Task CanInsertHotelIntoDatabasee()
         {
             var GetHotel = new CreateNewHotelCommandHandler(MockContext.Object);
-            var objGetHotelquery = new CreateNewHotelCommand();
+            var objGetHotelquery = new CreateNewHotelCommand() { Name= HotelDataFake.MockCreateNewHotelCommand().Name };
             var result = await GetHotel.Handle(objGetHotelquery, CancellationToken.None);
             Assert.NotNull(result);
         }
@@ -42,6 +43,15 @@ namespace UnitTest
             var objgetHotelByIdquery = new GetHotelByIdQuery() {hotelId = HotelDataFake.MockSamples()[0].Id };
             var result = await GetHotelById.Handle(objgetHotelByIdquery, CancellationToken.None);
             Assert.Equal(HotelDataFake.MockSamples()[0].Name, result.Name);
+        }
+
+        [Fact]
+        public async Task CanDelteHotelFromDatabasee()
+        {
+            var GetHotel = new DeleteHotelByIdCommandHandler(MockContext.Object);
+            var objDeletequery = new DeleteHotelByIdCommand() { hotelId = HotelDataFake.MockDeleteHotelByIdCommand().hotelId };
+            var result = await GetHotel.Handle(objDeletequery, CancellationToken.None);
+            Assert.NotNull(result);
         }
     }
 }

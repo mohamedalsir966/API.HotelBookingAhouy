@@ -24,7 +24,7 @@ namespace UnitTest
                 _databaseInitialized = true;
             }
         }
-
-        public static ApplicationDbContext CreateContext() => new(new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase("HotelMemoryDB").Options);
+        public static ApplicationDbContext CreateContext() => 
+            new(new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase("HotelMemoryDB").Options);
     }
 }
