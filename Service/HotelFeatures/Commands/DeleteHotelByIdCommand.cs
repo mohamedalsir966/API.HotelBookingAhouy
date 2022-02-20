@@ -34,8 +34,6 @@ namespace Service.HotelFeatures.Commands
                     }
 
                 }
-               
-
                 _context.Hotel.Remove(hotel);
                 await _context.SaveChangesAsync();
                 return hotel.Id;

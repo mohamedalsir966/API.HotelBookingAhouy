@@ -18,10 +18,7 @@ namespace Service.BookingFeatures.Commands
         public DateTime CheckoutDate { get; set; }
         public int RoomNo { get; set; }
         public int NumOfBed { get; set; }
-        public class Response : BaseResponse
-        {
-
-        }
+       
         public class CreateNewHotelCommandHandler : IRequestHandler<CreateBookingCommand, Guid?>
         {
             private readonly IApplicationDbContext _context;

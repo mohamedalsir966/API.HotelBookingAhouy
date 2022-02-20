@@ -31,17 +31,6 @@ namespace Persistence
                .HasIndex(x => x.Id);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder
-                .UseSqlServer("Data Source=.;Initial Catalog=HotelDB;Integrated Security=True");
-
-            }
-
-        }
-
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();

@@ -39,8 +39,6 @@ namespace Service.HotelFeatures.Commands
                     Description = request.Description,
                     Rate = request.Rate,
                     ImageUrl = request.ImageUrl
-
-
                 };
                 if (request.Facilities != null)
                 {
