@@ -18,6 +18,7 @@ namespace Domain.Entities
         public DateTime CheckinDate { get; set; }
         public DateTime CheckoutDate { get; set; }
         public int RoomNo { get; set; }
-        public BedType BedType { get; set; }
+        public int NumOfBed { get; set; }
+       
     }
 }
