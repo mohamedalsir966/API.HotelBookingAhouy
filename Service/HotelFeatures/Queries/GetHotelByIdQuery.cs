@@ -24,10 +24,11 @@ namespace Service.HotelFeatures.Queries
             }
             public async Task<Hotel> Handle(GetHotelByIdQuery request, CancellationToken cancellationToken)
             {
-                var hotel = await _context.Hotel.Where(a => a.Id == request.hotelId).FirstOrDefaultAsync();
+                var hotel = await _context.Hotel.Include(a=>a.Facilities).Where(a => a.Id == request.hotelId).FirstOrDefaultAsync();
                 if (hotel == null) return null;
                 return hotel;
             }
         }
     }
 }
+
