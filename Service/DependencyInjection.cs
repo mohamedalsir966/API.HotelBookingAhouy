@@ -13,9 +13,7 @@ namespace Service
     {
         public static void AddServiceLayer(this IServiceCollection services)
         {
-            // or you can use assembly in Extension method in Infra layer with below command
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            
         }
     }
 }
