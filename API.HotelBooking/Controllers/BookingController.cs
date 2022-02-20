@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Service.BookingFeatures.Commands;
+using Service.BookingFeatures.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,20 @@ namespace API.HotelBooking.Controllers
             }
             else
             {
-                command.hotelId = hotelId;
+                command.HotelId = hotelId;
                 return Ok(await Mediator.Send(command));
             }
+        }
+        /// <summary>
+        /// list of bookings
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await Mediator.Send(new GetAllBookingQuery()));
         }
     }
 }
