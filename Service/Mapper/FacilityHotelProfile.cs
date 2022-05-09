@@ -14,9 +14,9 @@ namespace Service.Mapper
     {
         public FacilityHotelProfile()
         {
-            CreateMap<FacilityHotelDto, FacilitesHotel>();
+            CreateMap<FacilitesHotel, FacilityHotelDto>()
+                   .ForMember(from => from.Facility, to => to.MapFrom(value => value.facilities));
             CreateMap<FacilitesHotel, CreateHotelFacilityCommand>();
-            CreateMap<Facilities, FacilityDto>().ReverseMap();
         }
     }
 }
