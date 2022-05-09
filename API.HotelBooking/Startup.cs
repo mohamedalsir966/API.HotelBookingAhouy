@@ -28,7 +28,8 @@ namespace API.HotelBooking
             services.AddSwaggerOpenAPI();
             services.AddServiceLayer();
             services.AddAutoMapper(GetType().Assembly, typeof(HotelProfile).Assembly);
-            services.AddAutoMapper(GetType().Assembly, typeof(LookupProfile).Assembly); 
+            services.AddAutoMapper(GetType().Assembly, typeof(LookupProfile).Assembly);
+            services.AddAutoMapper(GetType().Assembly, typeof(FacilityHotelProfile).Assembly);
 
 
         }
