@@ -29,5 +29,11 @@ namespace API.HotelBooking.Controllers
         {
             return Ok(await Mediator.Send(new GetFacilityByIdQuery { FacilityId = id }));
         }
+        [HttpGet]
+        [Route("/getallfacility")]
+        public async Task<IActionResult> GetAllFacility()
+        {
+            return Ok(await Mediator.Send(new GetAllFacilityQuery() ));
+        }
     }
 }
