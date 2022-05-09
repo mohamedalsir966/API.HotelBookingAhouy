@@ -14,10 +14,10 @@ namespace Infrastructure.Extension
     public static class ConfigureServiceContainer
     {
         public static void AddDbContext(this IServiceCollection serviceCollection,
-             IConfiguration configuration, IConfigurationRoot configRoot)
+             IConfiguration configuration)
         {
             serviceCollection.AddDbContext<ApplicationDbContext>(options =>
-                   options.UseSqlServer(configuration.GetConnectionString("HotelDBConn") ?? configRoot["ConnectionStrings:HotelDBConn"]
+                   options.UseSqlServer(configuration.GetConnectionString("HotelDBConn") 
                 , b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
         public static void AddSwaggerOpenAPI(this IServiceCollection serviceCollection)

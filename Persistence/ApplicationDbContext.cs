@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    public class ApplicationDbContext:DbContext, IApplicationDbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public ApplicationDbContext()
         {
@@ -20,6 +20,7 @@ namespace Persistence
         }
         public DbSet<Hotel> Hotel { get; set; }
         public DbSet<FacilitesHotel> FacilitesHotel { get; set; }
+        public DbSet<Facilities> Facilities { get; set; }
         public DbSet<Booking> Booking { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +30,8 @@ namespace Persistence
                 .HasIndex(x => x.Id);
             modelBuilder.Entity<Booking>()
                .HasIndex(x => x.Id);
+            modelBuilder.Entity<Facilities>()
+              .HasIndex(x => x.Id);
         }
 
         public async Task<int> SaveChangesAsync()

@@ -10,13 +10,11 @@ namespace Domain.Entities
 {
     public class Hotel : BaseEntity
     {
-       [Required(ErrorMessage = "Hotel Name is required")]
         public string Name { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Description { get; set; }
-        public virtual List<FacilitesHotel> Facilities { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
+        public virtual List<FacilitesHotel> FacilitesHotel { get; set; }
         public decimal Price { get; set; }
         public int Rate { get; set; }
         public string ImageUrl { get; set; }

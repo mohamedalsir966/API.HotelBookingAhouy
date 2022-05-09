@@ -1,21 +1,32 @@
-﻿using System;
+﻿using Domain.Entities;
+using Service.Dto.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Service.Dto
 {
-    public class HotelsResponse
+    public class HotelDto
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Description { get; set; }
-        public List<string> Facilities { get; set; }
+        public  List<FacilityHotelDto> FacilitesHotel { get; set; }
         public decimal Price { get; set; }
         public int Rate { get; set; }
         public string ImageUrl { get; set; }
+    }
+
+
+    public class HotelResponse : BaseResponse
+    {
+        public HotelDto Data { get; set; }
+    }
+    public class HotelsResponse : BaseResponse
+    {
+        public List<HotelDto> Data { get; set; }
     }
 }

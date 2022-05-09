@@ -26,7 +26,7 @@ namespace Service.HotelFeatures.Queries
                 var hotelname = request.HotelName;
                 if (!string.IsNullOrWhiteSpace(request.HotelName))
                 {
-                    var hotels = await _context.Hotel.Include(a => a.Facilities)
+                    var hotels = await _context.Hotel.Include(a => a.FacilitesHotel)
                               .Where(h=>h.Name.ToLower().Contains(hotelname.Trim().ToLower())).ToListAsync();
                     if (hotels == null) return null;
                     return hotels;

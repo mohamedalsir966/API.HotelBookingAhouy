@@ -26,36 +26,36 @@ namespace UnitTest
             MockContext.Setup(db => db.Hotel).Returns(SharedDatabaseFixture.CreateContext().Hotel);
         }
 
-        [Fact]
-        public async Task CanInsertHotelIntoDatabasee()
-        {
-            var GetHotel = new CreateNewHotelCommandHandler(MockContext.Object);
-            var objGetHotelquery = new CreateNewHotelCommand() {
-                Name= HotelDataFake.MockCreateNewHotelCommand().Name,
-                Description = HotelDataFake.MockCreateNewHotelCommand().Description,
-                State= HotelDataFake.MockCreateNewHotelCommand().State
-            };
-            var result = await GetHotel.Handle(objGetHotelquery, CancellationToken.None);
-            Assert.NotNull(result);
-        }
+        //[Fact]
+        //public async Task CanInsertHotelIntoDatabasee()
+        //{
+        //    var GetHotel = new CreateNewHotelCommandHandler(MockContext.Object);
+        //    var objGetHotelquery = new CreateNewHotelCommand() {
+        //        Name= HotelDataFake.MockCreateNewHotelCommand().Name,
+        //        Description = HotelDataFake.MockCreateNewHotelCommand().Description,
+        //        State= HotelDataFake.MockCreateNewHotelCommand().State
+        //    };
+        //    var result = await GetHotel.Handle(objGetHotelquery, CancellationToken.None);
+        //    Assert.NotNull(result);
+        //}
 
-        [Fact]
-        public async Task Can_GetHotelById()
-        {
+       // [Fact]
+        //public async Task Can_GetHotelById()
+        //{
            
-            var GetHotelById = new GetHotelByIdQueryHandler(MockContext.Object);
-            var objgetHotelByIdquery = new GetHotelByIdQuery() {hotelId = HotelDataFake.MockSamples()[0].Id };
-            var result = await GetHotelById.Handle(objgetHotelByIdquery, CancellationToken.None);
-            Assert.Equal(HotelDataFake.MockSamples()[0].Name, result.Name);
-        }
+        //    var GetHotelById = new GetHotelByIdQueryHandler(MockContext.Object);
+        //    var objgetHotelByIdquery = new GetHotelByIdQuery() {hotelId = HotelDataFake.MockSamples()[0].Id };
+        //    var result = await GetHotelById.Handle(objgetHotelByIdquery, CancellationToken.None);
+        //    Assert.Equal(HotelDataFake.MockSamples()[0].Name, result.Name);
+        //}
 
-        [Fact]
-        public async Task CanDelteHotelFromDatabasee()
-        {
-            var GetHotel = new DeleteHotelByIdCommandHandler(MockContext.Object);
-            var objDeletequery = new DeleteHotelByIdCommand() { hotelId = HotelDataFake.MockDeleteHotelByIdCommand().hotelId };
-            var result = await GetHotel.Handle(objDeletequery, CancellationToken.None);
-            Assert.NotNull(result);
-        }
+        //[Fact]
+        //public async Task CanDelteHotelFromDatabasee()
+        //{
+        //    var GetHotel = new DeleteHotelByIdCommandHandler(MockContext.Object);
+        //    var objDeletequery = new DeleteHotelByIdCommand() { hotelId = HotelDataFake.MockDeleteHotelByIdCommand().hotelId };
+        //    var result = await GetHotel.Handle(objDeletequery, CancellationToken.None);
+        //    Assert.NotNull(result);
+        //}
     }
 }

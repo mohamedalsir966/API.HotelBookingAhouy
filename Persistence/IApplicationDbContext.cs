@@ -12,7 +12,8 @@ namespace Persistence
     {
         DbSet<Hotel> Hotel { get; set; }
         DbSet<FacilitesHotel> FacilitesHotel { get; set; }
-        DbSet<Booking> Booking { get; set; }
+        DbSet<Booking> Booking { get; set; }    
+        DbSet<Facilities> Facilities { get; set; }
         Task<int> SaveChangesAsync();
     }
 }

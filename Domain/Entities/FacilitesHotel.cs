@@ -9,9 +9,9 @@ namespace Domain.Entities
 {
     public class FacilitesHotel :BaseEntity
     {
-
         public Guid hotelId { get; set; }
-        [ForeignKey(nameof(hotelId))]
-        public Facilities facilities { get; set; }
+        public Guid FacilitiesId { get; set; }
+        public  Facilities facilities { get; set; }
+        public virtual Hotel Hotel { get; set; }
     }
 }
