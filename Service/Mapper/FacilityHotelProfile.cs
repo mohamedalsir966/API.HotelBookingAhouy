@@ -16,11 +16,7 @@ namespace Service.Mapper
         {
             CreateMap<FacilityHotelDto, FacilitesHotel>();
             CreateMap<FacilitesHotel, CreateHotelFacilityCommand>();
-
-            
-                  
-                
-
+            CreateMap<Facilities, FacilityDto>().ReverseMap();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Service.Dto
         public string City { get; set; }
         public string State { get; set; }
         public string Description { get; set; }
-        public  List<FacilityHotelDto> FacilitesHotel { get; set; }
+        public  List<FacilityDto> FacilitesHotel { get; set; }
         public decimal Price { get; set; }
         public int Rate { get; set; }
         public string ImageUrl { get; set; }

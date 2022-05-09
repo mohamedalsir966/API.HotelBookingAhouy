@@ -13,13 +13,13 @@ namespace API.HotelBooking.Controllers
     public class FacilityHotelController : BaseController
     {
         /// <summary>
-        /// for adding new hotel
+        /// for adding new hotelfacility
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
 
         [HttpPost]
-        [Route("/Addhotelfacility")]
+        [Route("/addhotelfacility")]
         public async Task<IActionResult> AddHotelFacility(CreateHotelFacilityCommand command)
         {
             return Ok(await Mediator.Send(command));
