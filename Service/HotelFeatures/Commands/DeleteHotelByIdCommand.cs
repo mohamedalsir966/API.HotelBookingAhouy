@@ -24,7 +24,7 @@ namespace Service.HotelFeatures.Commands
             {
                 var hotel = _context.Hotel.Where(a => a.Id == request.hotelId).FirstOrDefault();
                 if (hotel == null) return default;
-                if (hotel.Facilities!=null)
+                if (hotel.FacilitesHotel!= null)
                 {
                     var faciliteshotel = _context.FacilitesHotel.Where(a => a.hotelId == request.hotelId);
 

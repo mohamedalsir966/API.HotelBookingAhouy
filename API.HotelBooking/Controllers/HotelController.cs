@@ -31,6 +31,8 @@ namespace API.HotelBooking.Controllers
         /// </summary>
         /// <param name="hotilname"></param>
         /// <returns></returns>
+        /// 
+
 
         [HttpGet]
         [Route("SearchByName")]

@@ -6,28 +6,31 @@ using Microsoft.Extensions.Hosting;
 using Infrastructure.Extension;
 using Service;
 using System.IO;
-
+using Service.Mapper;
+using System.Text.Json.Serialization;
 
 namespace API.HotelBooking
 {
     public class Startup
     {
-        private readonly IConfigurationRoot configRoot;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            IConfigurationBuilder builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
-            configRoot = builder.Build();
+           
         }
         public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext(Configuration, configRoot);
+            services.AddDbContext(Configuration);
             services.AddScopedServices();
             services.AddSwaggerOpenAPI();
             services.AddServiceLayer();
+            services.AddAutoMapper(GetType().Assembly, typeof(HotelProfile).Assembly);
+            services.AddAutoMapper(GetType().Assembly, typeof(LookupProfile).Assembly); 
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

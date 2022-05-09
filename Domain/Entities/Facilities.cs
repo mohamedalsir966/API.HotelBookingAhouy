@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public enum Facilities
+    public class Facilities :BaseEntity
     {
-       [Description("Breakfast")]
-        Breakfast=1,
-        Wifi=2,
-        Parking=3,
-        Spa=4
+        public string Name { get; set; }
+       
     }
 }

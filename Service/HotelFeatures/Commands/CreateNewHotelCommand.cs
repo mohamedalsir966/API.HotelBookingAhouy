@@ -1,6 +1,8 @@
-﻿using Domain.Entities;
+﻿using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using Persistence;
+using Service.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,55 +12,38 @@ using System.Threading.Tasks;
 
 namespace Service.HotelFeatures.Commands
 {
-
-    public class CreateNewHotelCommand : IRequest<Guid?>
+    public class CreateNewHotelCommand : IRequest<HotelResponse>
     {
         public string Name { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Description { get; set; }
-         public ICollection<Facilities> Facilities { get; set; }
+        public decimal Price { get; set; }
         public int Rate { get; set; }
         public string ImageUrl { get; set; }
-       
-        public class CreateNewHotelCommandHandler : IRequestHandler<CreateNewHotelCommand, Guid?>
+
+        public class CreateNewHotelCommandHandler : IRequestHandler<CreateNewHotelCommand, HotelResponse>
         {
             private readonly IApplicationDbContext _context;
-            public CreateNewHotelCommandHandler(IApplicationDbContext context)
+            private readonly IMapper _mapper;
+            public CreateNewHotelCommandHandler(IApplicationDbContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
-            public async Task<Guid?> Handle(CreateNewHotelCommand request, CancellationToken cancellationToken)
+            public async Task<HotelResponse> Handle(CreateNewHotelCommand command, CancellationToken cancellationToken)
             {
-                var Hotel = new Hotel
-                {
-                    Id=Guid.NewGuid(),
-                    Name = request.Name,
-                    City = request.City,
-                    State = request.State,
-                    Description = request.Description,
-                    Rate = request.Rate,
-                    ImageUrl = request.ImageUrl
-                };
-                if (request.Facilities != null)
-                {
-                    foreach (var item in request.Facilities)
-                    {
-                        FacilitesHotel facilitesHotel = new FacilitesHotel();
-                        facilitesHotel.Id = Guid.NewGuid();
-                        facilitesHotel.hotelId = Hotel.Id;
-                        if (Enum.IsDefined(typeof(Facilities), item))
-                        {
-                            facilitesHotel.facilities = item;
-                        }
-
-                        _context.FacilitesHotel.Add(facilitesHotel);
-                    }
-                }
-
-                _context.Hotel.Add(Hotel);
+                var hotel = _mapper.Map<Hotel>(command);
+                _context.Hotel.Add(hotel);
                 await _context.SaveChangesAsync();
-                return Hotel.Id;
+
+               
+                return new HotelResponse
+                {
+                    Data = _mapper.Map<HotelDto>(hotel),
+                    StatusCode = 200,
+                    Message = "Data has been added"
+                };
             }
         }
     }

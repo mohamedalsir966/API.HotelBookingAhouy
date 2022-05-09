@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -11,26 +10,27 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Service.HotelFeatures.Queries
+namespace Service.LookupFeaturs.Queries
 {
-    public class GetAllHotelQuery : IRequest<HotelsResponse>
+    public class GetFacilityByIdQuery : IRequest<FacilityRespnse>
     {
-        public class GetAllHotelQueryHandler : IRequestHandler<GetAllHotelQuery, HotelsResponse>
+        public Guid FacilityId { get; set; }
+
+        public class GetFacilityByIdQueryHandler : IRequestHandler<GetFacilityByIdQuery, FacilityRespnse>
         {
             private readonly IApplicationDbContext _context;
             private readonly IMapper _mapper;
-            public GetAllHotelQueryHandler(IApplicationDbContext context,IMapper mapper)
+            public GetFacilityByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
             {
                 _context = context;
                 _mapper = mapper;
-
             }
-            public async Task<HotelsResponse> Handle(GetAllHotelQuery request, CancellationToken cancellationToken)
+            public async Task<FacilityRespnse> Handle(GetFacilityByIdQuery request, CancellationToken cancellationToken)
             {
-                var hotels = await _context.Hotel.Include(a => a.FacilitesHotel).ThenInclude(y=>y.facilities).AsNoTracking().ToListAsync();
-                if (hotels == null)
+                var facillty = await _context.Facilities.Where(a => a.Id == request.FacilityId).FirstOrDefaultAsync();
+                if (facillty == null)
                 {
-                    return new HotelsResponse
+                    return new FacilityRespnse
                     {
                         Data = null,
                         StatusCode = 404,
@@ -38,15 +38,14 @@ namespace Service.HotelFeatures.Queries
                     };
                 }
 
-                return new HotelsResponse
+                return new FacilityRespnse
                 {
-                    Data = _mapper.Map<List<HotelDto>>(hotels),
+                    Data = _mapper.Map<FacilityDto>(facillty),
                     StatusCode = 200,
                     Message = "Data found"
                 };
             }
         }
+
     }
-
 }
-
