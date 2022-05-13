@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using FluentValidation;
+using Service.PipelineBehaviours;
 
 namespace Service
 {
@@ -14,6 +16,11 @@ namespace Service
         public static void AddServiceLayer(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            //services.AddAutoMapper(GetType().Assembly, typeof(HotelProfile).Assembly);
+            //services.AddAutoMapper(GetType().Assembly, typeof(LookupProfile).Assembly);
+            //services.AddAutoMapper(GetType().Assembly, typeof(FacilityHotelProfile).Assembly);
         }
     }
 }
