@@ -1,5 +1,8 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Persistence;
+using Persistence.Repositories;
+using Service.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,35 +12,50 @@ using System.Threading.Tasks;
 
 namespace Service.HotelFeatures.Commands
 {
-    public class DeleteHotelByIdCommand : IRequest<Guid?>
+    public class DeleteHotelByIdCommand : IRequest<HotelResponse>
     {
-        public Guid hotelId { get; set; }
-
-        public class DeleteHotelByIdCommandHandler : IRequestHandler<DeleteHotelByIdCommand, Guid?>
+        public DeleteHotelByIdCommand(Guid id)
         {
-            private readonly IApplicationDbContext _context;
-            public DeleteHotelByIdCommandHandler(IApplicationDbContext context)
+            hotelId = id;
+        }
+
+        public Guid hotelId { get;  }
+    }
+
+    public class DeleteHotelByIdCommandHandler : IRequestHandler<DeleteHotelByIdCommand, HotelResponse>
+    {
+        private readonly IMapper _mapper;
+        private readonly IHotelRepository _HotelRepository;
+        public DeleteHotelByIdCommandHandler(IMapper mapper, IHotelRepository hotelrepository)
+        {
+            _mapper = mapper;
+            _HotelRepository = hotelrepository;
+        }
+        public async Task<HotelResponse> Handle(DeleteHotelByIdCommand request, CancellationToken cancellationToken)
+        {
+            var hotel = await _HotelRepository.GetHotilByIdQuery(request.hotelId);
+            if (hotel.Id != Guid.Empty)
             {
-                _context = context;
-            }
-            public async Task<Guid?> Handle(DeleteHotelByIdCommand request, CancellationToken cancellationToken)
-            {
-                var hotel = _context.Hotel.Where(a => a.Id == request.hotelId).FirstOrDefault();
-                if (hotel == null) return default;
-                if (hotel.FacilitesHotel!= null)
+                var deletedhotel = await _HotelRepository.DeleteHotilByIdCommand(hotel);
+
+                return new HotelResponse
                 {
-                    var faciliteshotel = _context.FacilitesHotel.Where(a => a.hotelId == request.hotelId);
-
-                    foreach (var item in faciliteshotel)
-                    {
-                        _context.FacilitesHotel.Remove(item);
-                    }
-
-                }
-                _context.Hotel.Remove(hotel);
-                await _context.SaveChangesAsync();
-                return hotel.Id;
+                    Data = _mapper.Map<HotelDto>(deletedhotel),
+                    StatusCode = 200,
+                    Message = "Data found"
+                };
             }
+            else
+            {
+                return new HotelResponse
+                {
+                    Data = null,
+                    StatusCode = 404,
+                    Message = "Data has been Deleted"
+                };
+            }
+           
         }
     }
+
 }

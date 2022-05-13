@@ -38,7 +38,9 @@ namespace API.HotelBooking.Controllers
         [Route("SearchByName")]
         public async Task<IActionResult> GetHotilByName(string hotilname)
         {
-            return Ok(await Mediator.Send(new SearchHotelQuery {HotelName= hotilname }));
+            var qurey = new SearchHotelQuery(hotilname);
+            var result = await Mediator.Send(qurey);
+            return Ok(result);
         }
         /// <summary>
         /// get hotel  by id
@@ -49,7 +51,9 @@ namespace API.HotelBooking.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            return Ok(await Mediator.Send(new GetHotelByIdQuery { hotelId = id }));
+            var qurey = new GetHotelByIdQuery(id);
+            var result = await Mediator.Send(qurey);
+            return Ok(result);
         }
         /// <summary>
         /// list of hotels
@@ -60,7 +64,9 @@ namespace API.HotelBooking.Controllers
         [Route("")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await Mediator.Send(new GetAllHotelQuery()));
+            var qurey = new GetAllHotelQuery();
+            var result = await Mediator.Send(qurey);
+            return Ok(result);
         }
 
        
@@ -73,8 +79,25 @@ namespace API.HotelBooking.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok(await Mediator.Send(new DeleteHotelByIdCommand { hotelId = id }));
+           
+            var qurey = new DeleteHotelByIdCommand(id);
+            var result = await Mediator.Send(qurey);
+            return Ok(result);
         }
-       
+        /// <summary>
+        /// Updates the  Entity based on Id.   
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update( UpdateHotelCommand command)
+        {
+            var qurey = new UpdateHotelCommand(command);
+            var result = await Mediator.Send(qurey);
+            return Ok(result);
+
+        }
+
     }
 }

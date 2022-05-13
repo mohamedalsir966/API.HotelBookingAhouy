@@ -16,7 +16,7 @@ namespace Persistence
         }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+           // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         public DbSet<Hotel> Hotel { get; set; }
         public DbSet<FacilitesHotel> FacilitesHotel { get; set; }
@@ -36,7 +36,41 @@ namespace Persistence
 
         public async Task<int> SaveChangesAsync()
         {
+            // UpdateUpdateDate();
+           // HandleBookDelete();
             return await base.SaveChangesAsync();
+           
         }
+        private void HandleBookDelete()
+        {
+            var entities = ChangeTracker.Entries()
+                                .Where(e => e.State == EntityState.Deleted);
+            foreach (var entity in entities)
+            {
+                if (entity.Entity is Hotel)
+                {
+                    entity.State = EntityState.Modified;
+                    var book = entity.Entity as Hotel;
+                    book.IsDeleted = true;
+                }
+            }
+        }
+        //private void UpdateUpdateDate()
+        //{
+        //    var updateDate = "ModifiedOn";
+        //    ChangeTracker.DetectChanges();
+        //    var modified = ChangeTracker.Entries();
+        //    foreach (var entity in modified)
+        //    {
+        //        foreach (var prop in entity.Properties)
+        //        {
+        //            if (prop.Metadata.Name == updateDate)
+        //            {
+        //                entity.CurrentValues[updateDate] = DateTime.Now;
+        //            }
+        //        }
+        //    }
+        //}
+
     }
 }

@@ -1,7 +1,10 @@
-﻿using Domain.Entities;
+﻿using AutoMapper;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Repositories;
+using Service.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,32 +14,51 @@ using System.Threading.Tasks;
 
 namespace Service.HotelFeatures.Queries
 {
-    public class SearchHotelQuery : IRequest<List<Hotel>>
+    public class SearchHotelQuery : IRequest<HotelsResponse>
     {
-        public string HotelName { get; set; }
-        public class SearchHotelQueryHandler : IRequestHandler<SearchHotelQuery, List<Hotel>>
+        public string HotelName { get; }
+        public SearchHotelQuery(string hotelName)
         {
-            private readonly IApplicationDbContext _context;
-            public SearchHotelQueryHandler(IApplicationDbContext context)
-            {
-                _context = context;
-            }
-            public async Task<List<Hotel>> Handle(SearchHotelQuery request, CancellationToken cancellationToken)
-            {
-                var hotelname = request.HotelName;
-                if (!string.IsNullOrWhiteSpace(request.HotelName))
-                {
-                    var hotels = await _context.Hotel.Include(a => a.FacilitesHotel)
-                              .Where(h=>h.Name.ToLower().Contains(hotelname.Trim().ToLower())).ToListAsync();
-                    if (hotels == null) return null;
-                    return hotels;
-                }
-                else
-                {
-                    return null;
-                }
-
-            }
+            HotelName = hotelName;
         }
     }
+    public class SearchHotelQueryHandler : IRequestHandler<SearchHotelQuery, HotelsResponse>
+    {
+        private readonly IMapper _mapper;
+        private readonly IHotelRepository _hotelrepository;
+        public SearchHotelQueryHandler(IMapper mapper,IHotelRepository hotelrepository)
+        {
+            _mapper = mapper;
+            _hotelrepository = hotelrepository;
+        }
+        public async Task<HotelsResponse> Handle(SearchHotelQuery request, CancellationToken cancellationToken)
+        {
+            //need to move
+            if (!string.IsNullOrWhiteSpace(request.HotelName))
+            {
+
+                return null;
+                
+            }
+                var hotels = await _hotelrepository.GetSearchHotilQuery(request.HotelName);
+                if (hotels == null ||hotels.Count==0)
+                {
+                    return new HotelsResponse
+                    {
+                        Data = null,
+                        StatusCode = 404,
+                        Message = "No data found"
+                    };
+                }
+                return new HotelsResponse
+                {
+                    Data = _mapper.Map<List<HotelDto>>(hotels),
+                    StatusCode = 200,
+                    Message = "Data found"
+                };
+           
+
+        }
+    }
+
 }
