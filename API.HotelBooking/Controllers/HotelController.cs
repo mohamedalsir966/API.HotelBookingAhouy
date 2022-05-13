@@ -90,11 +90,11 @@ namespace API.HotelBooking.Controllers
         /// <param name="id"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update( UpdateHotelCommand command)
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateHotelCommand command)
         {
-            var qurey = new UpdateHotelCommand(command);
-            var result = await Mediator.Send(qurey);
+            //var qurey = new UpdateHotelCommand(command);
+            var result = await Mediator.Send(command);
             return Ok(result);
 
         }

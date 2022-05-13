@@ -9,10 +9,11 @@ namespace Persistence.Repositories
 {
     public interface IHotelRepository
     {
-        Task<Hotel> GetHotilByIdQuery(Guid? id);
-        Task<Hotel> DeleteHotilByIdCommand(Hotel hotel);
+        Task<Hotel> GetHotelByIdQuery(Guid? id);
+        Task<Hotel> DeleteHotelByIdCommand(Hotel hotel);
+        Task<Hotel> UpdateHotelByIdCommand(Hotel hotel);
         Task<Hotel> CreateNewHotelCommand(Hotel hotel);
-        Task<List<Hotel>> GetAllHotilsQuery();
+        Task<List<Hotel>> GetAllHotelsQuery();
         Task<List<Hotel>> GetSearchHotilQuery(string hotelname);
     }
 }

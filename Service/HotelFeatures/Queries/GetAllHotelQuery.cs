@@ -28,7 +28,7 @@ namespace Service.HotelFeatures.Queries
         }
         public async Task<HotelsResponse> Handle(GetAllHotelQuery request, CancellationToken cancellationToken)
         {
-            var hotels = await _hotelrepository.GetAllHotilsQuery();
+            var hotels = await _hotelrepository.GetAllHotelsQuery();
 
             if (hotels == null)
             {

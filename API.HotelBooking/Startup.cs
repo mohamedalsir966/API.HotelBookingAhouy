@@ -8,6 +8,9 @@ using Service;
 using System.IO;
 using Service.Mapper;
 using System.Text.Json.Serialization;
+using FluentValidation;
+using MediatR;
+using Service.PipelineBehaviours;
 
 namespace API.HotelBooking
 {
@@ -32,6 +35,7 @@ namespace API.HotelBooking
             services.AddAutoMapper(GetType().Assembly, typeof(FacilityHotelProfile).Assembly);
 
 
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,10 +45,12 @@ namespace API.HotelBooking
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseHttpsRedirection();
             app.ConfigureCustomExceptionMiddleware();
 
             app.UseRouting();
             app.ConfigureSwagger();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

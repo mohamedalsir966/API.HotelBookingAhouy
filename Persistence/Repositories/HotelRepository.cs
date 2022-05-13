@@ -24,20 +24,20 @@ namespace Persistence.Repositories
             return hotel;
         }
 
-        public async Task<Hotel> DeleteHotilByIdCommand(Hotel hotel)
+        public async Task<Hotel> DeleteHotelByIdCommand(Hotel hotel)
         {
             hotel.IsDeleted = true;
             await _context.SaveChangesAsync();
             return hotel;
         }
 
-        public async Task<List<Hotel>> GetAllHotilsQuery()
+        public async Task<List<Hotel>> GetAllHotelsQuery()
         {
             var hotels = await _context.Hotel.Include(a => a.FacilitesHotel).ThenInclude(y => y.facilities).ToListAsync();
             return hotels;
         }
 
-        public async Task<Hotel> GetHotilByIdQuery(Guid? id)
+        public async Task<Hotel> GetHotelByIdQuery(Guid? id)
         {
             var hotel = await _context.Hotel.Include(a => a.FacilitesHotel).ThenInclude(y => y.facilities).Where(a => a.Id == id).FirstOrDefaultAsync();
             return hotel;
@@ -48,6 +48,12 @@ namespace Persistence.Repositories
             var hotel = await _context.Hotel.Include(a => a.FacilitesHotel)
                           .Where(h => h.Name.ToLower().Contains(hotelname.Trim().ToLower())).ToListAsync();
             return hotel;
+        }
+
+        public async Task<Hotel> UpdateHotelByIdCommand(Hotel existinghotel)
+        {
+            await _context.SaveChangesAsync();
+            return existinghotel;
         }
     }
 }

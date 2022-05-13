@@ -33,16 +33,16 @@ namespace Service.HotelFeatures.Commands
         }
         public async Task<HotelResponse> Handle(DeleteHotelByIdCommand request, CancellationToken cancellationToken)
         {
-            var hotel = await _HotelRepository.GetHotilByIdQuery(request.hotelId);
+            var hotel = await _HotelRepository.GetHotelByIdQuery(request.hotelId);
             if (hotel.Id != Guid.Empty)
             {
-                var deletedhotel = await _HotelRepository.DeleteHotilByIdCommand(hotel);
+                var deletedhotel = await _HotelRepository.DeleteHotelByIdCommand(hotel);
 
                 return new HotelResponse
                 {
                     Data = _mapper.Map<HotelDto>(deletedhotel),
                     StatusCode = 200,
-                    Message = "Data found"
+                    Message = "Data has been Deleted"
                 };
             }
             else
@@ -51,7 +51,7 @@ namespace Service.HotelFeatures.Commands
                 {
                     Data = null,
                     StatusCode = 404,
-                    Message = "Data has been Deleted"
+                    Message = "No data found"
                 };
             }
            
