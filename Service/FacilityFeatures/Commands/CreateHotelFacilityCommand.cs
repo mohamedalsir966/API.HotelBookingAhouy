@@ -14,8 +14,8 @@ namespace Service.FacilityFeatures.Commands
 {
     public class CreateHotelFacilityCommand: IRequest<FacilityHotelRespose>
     {
-        public Guid hotelId { get; set; }
-        public Guid facilitiesid { get; set; }
+        public Guid HotelId { get; set; }
+        public Guid Facilitiesid { get; set; }
         public class CreateHotelFacilityCommandHandler : IRequestHandler<CreateHotelFacilityCommand, FacilityHotelRespose>
         {
             private readonly IApplicationDbContext _context;
@@ -30,11 +30,11 @@ namespace Service.FacilityFeatures.Commands
                 //get fasilty by id 
                // var QrmeResponseValueList =
                //await Processv2(command.facilitiesid);
-                var any =  _context.Facilities.Where(a => a.Id == command.facilitiesid).FirstOrDefault();
+                var any =  _context.Facilities.Where(a => a.Id == command.Facilitiesid).FirstOrDefault();
 
                 var FacilitesHotel = new FacilitesHotel();
                 FacilitesHotel.Id = new Guid();
-                FacilitesHotel.hotelId = command.hotelId;
+                FacilitesHotel.hotelId = command.HotelId;
                 FacilitesHotel.FacilitiesId = any.Id;
                 //var hotel = _mapper.Map<FacilitesHotel>(command);
 

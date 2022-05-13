@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using Persistence;
 using Persistence.Repositories;
 using Service.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,7 +31,7 @@ namespace Service.HotelFeatures.Commands
         public async Task<HotelResponse> Handle(CreateNewHotelCommand command, CancellationToken cancellationToken)
         {
             var hotel = _mapper.Map<Hotel>(command);
-            var created = await _HotelRepository.CreateNewHotelCommand(hotel);
+             await _HotelRepository.CreateNewHotelCommand(hotel);
             return new HotelResponse
             {
                 Data = _mapper.Map<HotelDto>(hotel),
