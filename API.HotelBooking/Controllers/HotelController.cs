@@ -1,10 +1,6 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Service.HotelFeatures.Commands;
 using Service.HotelFeatures.Queries;
 
@@ -12,7 +8,6 @@ namespace API.HotelBooking.Controllers
 {
    [ApiController]
    [Route("[controller]")]
-    
     public class HotelController : BaseController
     {
         /// <summary>
@@ -32,7 +27,6 @@ namespace API.HotelBooking.Controllers
         /// <param name="hotilname"></param>
         /// <returns></returns>
         /// 
-
 
         [HttpGet]
         [Route("SearchByName")]
@@ -68,7 +62,6 @@ namespace API.HotelBooking.Controllers
             var result = await Mediator.Send(qurey);
             return Ok(result);
         }
-
        
         /// <summary>
         /// delte hotel  by id
@@ -90,13 +83,12 @@ namespace API.HotelBooking.Controllers
         /// <param name="id"></param>
         /// <param name="command"></param>
         /// <returns></returns>
+        /// 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateHotelCommand command)
         {
-            //var qurey = new UpdateHotelCommand(command);
             var result = await Mediator.Send(command);
             return Ok(result);
-
         }
 
     }

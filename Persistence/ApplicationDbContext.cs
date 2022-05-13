@@ -36,25 +36,22 @@ namespace Persistence
 
         public async Task<int> SaveChangesAsync()
         {
-            // UpdateUpdateDate();
-           // HandleBookDelete();
             return await base.SaveChangesAsync();
-           
         }
-        private void HandleBookDelete()
-        {
-            var entities = ChangeTracker.Entries()
-                                .Where(e => e.State == EntityState.Deleted);
-            foreach (var entity in entities)
-            {
-                if (entity.Entity is Hotel)
-                {
-                    entity.State = EntityState.Modified;
-                    var book = entity.Entity as Hotel;
-                    book.IsDeleted = true;
-                }
-            }
-        }
+        //private void HandleBookDelete()
+        //{
+        //    var entities = ChangeTracker.Entries()
+        //                        .Where(e => e.State == EntityState.Deleted);
+        //    foreach (var entity in entities)
+        //    {
+        //        if (entity.Entity is Hotel)
+        //        {
+        //            entity.State = EntityState.Modified;
+        //            var book = entity.Entity as Hotel;
+        //            book.IsDeleted = true;
+        //        }
+        //    }
+        //}
         //private void UpdateUpdateDate()
         //{
         //    var updateDate = "ModifiedOn";

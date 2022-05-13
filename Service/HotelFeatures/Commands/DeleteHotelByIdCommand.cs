@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using Persistence;
 using Persistence.Repositories;
 using Service.Dto;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,10 +12,10 @@ namespace Service.HotelFeatures.Commands
     {
         public DeleteHotelByIdCommand(Guid id)
         {
-            hotelId = id;
+            HotelId = id;
         }
 
-        public Guid hotelId { get;  }
+        public Guid HotelId { get;  }
     }
 
     public class DeleteHotelByIdCommandHandler : IRequestHandler<DeleteHotelByIdCommand, HotelResponse>
@@ -33,7 +29,7 @@ namespace Service.HotelFeatures.Commands
         }
         public async Task<HotelResponse> Handle(DeleteHotelByIdCommand request, CancellationToken cancellationToken)
         {
-            var hotel = await _HotelRepository.GetHotelByIdQuery(request.hotelId);
+            var hotel = await _HotelRepository.GetHotelByIdQuery(request.HotelId);
             if (hotel.Id != Guid.Empty)
             {
                 var deletedhotel = await _HotelRepository.DeleteHotelByIdCommand(hotel);

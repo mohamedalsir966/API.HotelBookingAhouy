@@ -5,12 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Infrastructure.Extension;
 using Service;
-using System.IO;
-using Service.Mapper;
-using System.Text.Json.Serialization;
-using FluentValidation;
-using MediatR;
-using Service.PipelineBehaviours;
+
 
 namespace API.HotelBooking
 {
@@ -27,15 +22,13 @@ namespace API.HotelBooking
         {
             services.AddControllers();
             services.AddDbContext(Configuration);
+            #region her we register DI in ConfigureServiceContainer
+            #endregion
             services.AddScopedServices();
             services.AddSwaggerOpenAPI();
+            #region her we add Mediator piplin and mapin profile DependencyInjection
+            #endregion
             services.AddServiceLayer();
-            services.AddAutoMapper(GetType().Assembly, typeof(HotelProfile).Assembly);
-            services.AddAutoMapper(GetType().Assembly, typeof(LookupProfile).Assembly);
-            services.AddAutoMapper(GetType().Assembly, typeof(FacilityHotelProfile).Assembly);
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
