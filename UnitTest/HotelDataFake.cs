@@ -35,7 +35,7 @@ namespace UnitTest
             return hotils;
         }
 
-        public static DeleteHotelByIdCommand MockDeleteHotelByIdCommand() => new() { hotelId = new Guid("a50e83e0-f374-48ee-ac02-c95d2dfe6123") };
+      //  public static DeleteHotelByIdCommand MockDeleteHotelByIdCommand() => new() { hotelId = new Guid("a50e83e0-f374-48ee-ac02-c95d2dfe6123") };
         public static CreateNewHotelCommand MockCreateNewHotelCommand() => new() { Name = "testname", State = "testState", Description = "testDescription" };
 
     }

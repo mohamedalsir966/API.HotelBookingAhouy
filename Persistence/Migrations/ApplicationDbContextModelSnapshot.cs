@@ -78,6 +78,9 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("FacilitiesId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -87,17 +90,14 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("facilitiesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("hotelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("FacilitiesId");
 
-                    b.HasIndex("facilitiesId");
+                    b.HasIndex("Id");
 
                     b.HasIndex("hotelId");
 
@@ -188,10 +188,12 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.Facilities", "facilities")
                         .WithMany()
-                        .HasForeignKey("facilitiesId");
+                        .HasForeignKey("FacilitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entities.Hotel", "Hotel")
-                        .WithMany("Facilities")
+                        .WithMany("FacilitesHotel")
                         .HasForeignKey("hotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -203,7 +205,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Hotel", b =>
                 {
-                    b.Navigation("Facilities");
+                    b.Navigation("FacilitesHotel");
                 });
 #pragma warning restore 612, 618
         }

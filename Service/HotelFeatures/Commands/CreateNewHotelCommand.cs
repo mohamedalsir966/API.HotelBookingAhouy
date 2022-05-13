@@ -2,6 +2,7 @@
 using Domain.Entities;
 using MediatR;
 using Persistence;
+using Persistence.Repositories;
 using Service.Dto;
 using System;
 using System.Collections.Generic;
@@ -21,31 +22,29 @@ namespace Service.HotelFeatures.Commands
         public decimal Price { get; set; }
         public int Rate { get; set; }
         public string ImageUrl { get; set; }
+    }
 
-        public class CreateNewHotelCommandHandler : IRequestHandler<CreateNewHotelCommand, HotelResponse>
+    public class CreateNewHotelCommandHandler : IRequestHandler<CreateNewHotelCommand, HotelResponse>
+    {
+        private readonly IMapper _mapper;
+        private readonly IHotelRepository _HotelRepository;
+        public CreateNewHotelCommandHandler(IMapper mapper, IHotelRepository hotelrepository)
         {
-            private readonly IApplicationDbContext _context;
-            private readonly IMapper _mapper;
-            public CreateNewHotelCommandHandler(IApplicationDbContext context, IMapper mapper)
+            _mapper = mapper;
+            _HotelRepository = hotelrepository;
+        }
+        public async Task<HotelResponse> Handle(CreateNewHotelCommand command, CancellationToken cancellationToken)
+        {
+            var hotel = _mapper.Map<Hotel>(command);
+            var created = await _HotelRepository.CreateNewHotelCommand(hotel);
+            return new HotelResponse
             {
-                _context = context;
-                _mapper = mapper;
-            }
-            public async Task<HotelResponse> Handle(CreateNewHotelCommand command, CancellationToken cancellationToken)
-            {
-                var hotel = _mapper.Map<Hotel>(command);
-                _context.Hotel.Add(hotel);
-                await _context.SaveChangesAsync();
-
-               
-                return new HotelResponse
-                {
-                    Data = _mapper.Map<HotelDto>(hotel),
-                    StatusCode = 200,
-                    Message = "Data has been added"
-                };
-            }
+                Data = _mapper.Map<HotelDto>(hotel),
+                StatusCode = 200,
+                Message = "Data has been added"
+            };
         }
     }
+
 
 }

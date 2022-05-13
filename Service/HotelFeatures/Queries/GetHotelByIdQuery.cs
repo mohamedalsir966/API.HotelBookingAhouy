@@ -3,6 +3,7 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Repositories;
 using Service.Dto;
 using System;
 using System.Collections.Generic;
@@ -15,38 +16,44 @@ namespace Service.HotelFeatures.Queries
 {
     public class GetHotelByIdQuery : IRequest<HotelResponse>
     {
-        public Guid hotelId { get; set; }
-
-        public class GetHotelByIdQueryHandler : IRequestHandler<GetHotelByIdQuery, HotelResponse>
+        public Guid Id { get; }
+        public GetHotelByIdQuery(Guid id)
         {
-            private readonly IApplicationDbContext _context;
-            private readonly IMapper _mapper;
-            public GetHotelByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
-            public async Task<HotelResponse> Handle(GetHotelByIdQuery request, CancellationToken cancellationToken)
-            {
-                var hotel = await _context.Hotel.Include(a => a.FacilitesHotel).ThenInclude(y=>y.facilities).Where(a => a.Id == request.hotelId).AsNoTracking().FirstOrDefaultAsync();
-                //var any = _mapper.Map<HotelDto>(hotel);
-                if (hotel == null) {
-                    return new HotelResponse
-                    {
-                        Data = null,
-                        StatusCode = 404,
-                        Message = "No data found"
-                    };
-                }
-
-                return new HotelResponse
-                {
-                    Data = _mapper.Map<HotelDto>(hotel),
-                    StatusCode = 200,
-                    Message = "Data found"
-                };
-            }
+            Id = id;
         }
     }
+
+    public class GetHotelByIdQueryHandler : IRequestHandler<GetHotelByIdQuery, HotelResponse>
+    {
+        private readonly IMapper _mapper;
+        private readonly IHotelRepository _HotelRepository;
+        public GetHotelByIdQueryHandler(IMapper mapper, IHotelRepository hotelrepository)
+        {
+            _mapper = mapper;
+            _HotelRepository = hotelrepository;
+        }
+        public async Task<HotelResponse> Handle(GetHotelByIdQuery request, CancellationToken cancellationToken)
+        {
+            var hotel = await _HotelRepository.GetHotilByIdQuery(request.Id);
+
+            if (hotel == null)
+            {
+                return new HotelResponse
+                {
+                    Data = null,
+                    StatusCode = 404,
+                    Message = "No data found"
+                };
+            }
+
+            return new HotelResponse
+            {
+                Data = _mapper.Map<HotelDto>(hotel),
+                StatusCode = 200,
+                Message = "Data found"
+            };
+        }
+    }
+
 }
 

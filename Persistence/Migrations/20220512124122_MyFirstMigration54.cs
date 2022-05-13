@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class MyFirstMigration55 : Migration
+    public partial class MyFirstMigration54 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,8 @@ namespace Persistence.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,11 +35,11 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,7 +61,8 @@ namespace Persistence.Migrations
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,21 +75,22 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     hotelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    facilitiesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    FacilitiesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FacilitesHotel", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FacilitesHotel_Facilities_facilitiesId",
-                        column: x => x.facilitiesId,
+                        name: "FK_FacilitesHotel_Facilities_FacilitiesId",
+                        column: x => x.FacilitiesId,
                         principalTable: "Facilities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FacilitesHotel_Hotel_hotelId",
                         column: x => x.hotelId,
@@ -102,9 +105,9 @@ namespace Persistence.Migrations
                 column: "Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FacilitesHotel_facilitiesId",
+                name: "IX_FacilitesHotel_FacilitiesId",
                 table: "FacilitesHotel",
-                column: "facilitiesId");
+                column: "FacilitiesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FacilitesHotel_hotelId",
@@ -114,6 +117,11 @@ namespace Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_FacilitesHotel_Id",
                 table: "FacilitesHotel",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Facilities_Id",
+                table: "Facilities",
                 column: "Id");
 
             migrationBuilder.CreateIndex(
