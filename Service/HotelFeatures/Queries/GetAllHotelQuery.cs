@@ -2,13 +2,14 @@
 using MediatR;
 using Persistence.Repositories;
 using Service.Dto;
+using Service.PaginationFilter;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Service.HotelFeatures.Queries
 {
-    public class GetAllHotelQuery : IRequest<HotelsResponse>
+    public class GetAllHotelQuery : Pagination,IRequest<HotelsResponse>
     { }
     public class GetAllHotelQueryHandler : IRequestHandler<GetAllHotelQuery, HotelsResponse>
     {
@@ -22,7 +23,7 @@ namespace Service.HotelFeatures.Queries
         }
         public async Task<HotelsResponse> Handle(GetAllHotelQuery request, CancellationToken cancellationToken)
         {
-            var hotels = await _hotelrepository.GetAllHotelsQuery();
+            var hotels = await _hotelrepository.GetAllHotelsQuery(request.PageNumber, request.PageSize);
 
             if (hotels == null)
             {

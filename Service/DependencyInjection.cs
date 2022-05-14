@@ -22,8 +22,6 @@ namespace Service
             });
             services.AddSingleton<IMapper>(s => config.CreateMapper());
 
-
-
         }
     }
 }

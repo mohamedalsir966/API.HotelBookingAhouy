@@ -13,7 +13,7 @@ namespace Persistence.Repositories
         Task<Hotel> DeleteHotelByIdCommand(Hotel hotel);
         Task<Hotel> UpdateHotelByIdCommand(Hotel hotel);
         Task<Hotel> CreateNewHotelCommand(Hotel hotel);
-        Task<List<Hotel>> GetAllHotelsQuery();
-        Task<List<Hotel>> GetSearchHotilQuery(string hotelname);
+        Task<List<Hotel>> GetAllHotelsQuery(int PageNumber, int PageSize);
+        Task<List<Hotel>> GetSearchHotilQuery(string hotelname, int PageSize, int PageNumber);
     }
 }

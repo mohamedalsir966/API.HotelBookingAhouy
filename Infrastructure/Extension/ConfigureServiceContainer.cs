@@ -18,7 +18,7 @@ namespace Infrastructure.Extension
              IConfiguration configuration)
         {
             serviceCollection.AddDbContext<ApplicationDbContext>(options =>
-                   options.UseSqlServer(configuration.GetConnectionString("HotelDBConn") 
+                   options.UseSqlServer(configuration.GetConnectionString("HotelDBConn")
                 , b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
         public static void AddSwaggerOpenAPI(this IServiceCollection serviceCollection)
@@ -39,7 +39,7 @@ namespace Infrastructure.Extension
         {
             serviceCollection.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             serviceCollection.AddScoped<IHotelRepository, HotelRepository>();
-          
+
         }
     }
 }
