@@ -14,7 +14,6 @@ namespace Persistence.Repositories
         public HotelRepository(IApplicationDbContext context)
         {
             _context = context;
-
         }
 
         public async Task<Hotel> CreateNewHotelCommand(Hotel hotel)
@@ -31,9 +30,10 @@ namespace Persistence.Repositories
             return hotel;
         }
 
-        public async Task<List<Hotel>> GetAllHotelsQuery()
+        public async Task<List<Hotel>> GetAllHotelsQuery(int PageNumber, int PageSize)
         {
-            var hotels = await _context.Hotel.Include(a => a.FacilitesHotel).ThenInclude(y => y.facilities).ToListAsync();
+            var hotels = await _context.Hotel.Skip((PageNumber - 1) * PageSize)
+                                          .Take(PageSize).Include(a => a.FacilitesHotel).ThenInclude(y => y.facilities).ToListAsync();
             return hotels;
         }
 
@@ -43,10 +43,12 @@ namespace Persistence.Repositories
             return hotel;
         }
 
-        public async Task<List<Hotel>> GetSearchHotilQuery(string hotelname)
+        public async Task<List<Hotel>> GetSearchHotilQuery(string hotelname,int PageNumber,int PageSize)
         {
-            var hotel = await _context.Hotel.Include(a => a.FacilitesHotel)
-                          .Where(h => h.Name.ToLower().Contains(hotelname.Trim().ToLower())).ToListAsync();
+
+            var hotel = await _context.Hotel.Skip((PageNumber - 1) * PageSize)
+                                          .Take(PageSize).Include(a => a.FacilitesHotel).ThenInclude(y => y.facilities)
+                                           .Where(h => h.Name.ToLower().Contains(hotelname.Trim().ToLower())).ToListAsync();
             return hotel;
         }
 

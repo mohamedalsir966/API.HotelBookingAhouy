@@ -30,10 +30,9 @@ namespace API.HotelBooking.Controllers
 
         [HttpGet]
         [Route("SearchByName")]
-        public async Task<IActionResult> GetHotilByName(string hotilname)
+        public async Task<IActionResult> GetHotilByName(SearchHotelQuery query)
         {
-            var qurey = new SearchHotelQuery(hotilname);
-            var result = await Mediator.Send(qurey);
+            var result = await Mediator.Send(query);
             return Ok(result);
         }
         /// <summary>
@@ -56,9 +55,8 @@ namespace API.HotelBooking.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(GetAllHotelQuery qurey)
         {
-            var qurey = new GetAllHotelQuery();
             var result = await Mediator.Send(qurey);
             return Ok(result);
         }
