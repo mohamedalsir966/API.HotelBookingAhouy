@@ -39,6 +39,7 @@ namespace Infrastructure.Extension
         {
             serviceCollection.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             serviceCollection.AddScoped<IHotelRepository, HotelRepository>();
+            serviceCollection.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         }
     }
