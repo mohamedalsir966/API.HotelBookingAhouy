@@ -21,6 +21,7 @@ namespace Service
                 c.AddProfile<FacilityHotelProfile>();
             });
             services.AddSingleton<IMapper>(s => config.CreateMapper());
+           
 
         }
     }
