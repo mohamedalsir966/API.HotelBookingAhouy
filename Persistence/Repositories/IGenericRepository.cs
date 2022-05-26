@@ -14,7 +14,7 @@ namespace Persistence.Repositories
         //Task<T> DeleteByIdCommand(T hotel);
         //Task<T> UpdateByIdCommand(T hotel);
         //Task<T> CreateNewCommand(T hotel);
-        Task<List<T>> GetAllQuery(int PageNumber, int PageSize);
+      //  Task<List<T>> GetAllQuery(int PageNumber, int PageSize);
         //Task<List<T>> GetSearchHotilQuery(string hotelname, int PageSize, int PageNumber);
         Task<List<T>> GetWithIncludeAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, params Expression<Func<T, object>>[] includes);
     }
