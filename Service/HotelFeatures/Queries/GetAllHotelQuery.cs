@@ -26,22 +26,22 @@ namespace Service.HotelFeatures.Queries
         }
         public async Task<HotelsResponse> Handle(GetAllHotelQuery request, CancellationToken cancellationToken)
         {
-            var cachedResponse = await _cacheService.GetCachedValue<HotelsResponse>(CachedEntity.Hotels, "1");
+            //var cachedResponse = await _cacheService.GetCachedValue<HotelsResponse>(CachedEntity.Hotels, "1");
 
-            if (cachedResponse != null)
-            {
-                return new HotelsResponse
-                {
-                    Data = _mapper.Map<List<HotelDto>>(cachedResponse),
-                    StatusCode = 200,
-                    Message = "Data found"
-                };
-            }
+            //if (cachedResponse != null)
+            //{
+            //    return new HotelsResponse
+            //    {
+            //        Data = _mapper.Map<List<HotelDto>>(cachedResponse),
+            //        StatusCode = 200,
+            //        Message = "Data found"
+            //    };
+            //}
 
             var hotels = await _hotelrepository.GetAllHotelsQuery(request.PageNumber, request.PageSize);
             var tocash = _mapper.Map<List<HotelDto>>(hotels);
 
-            await _cacheService.PutCacheValue(CachedEntity.Hotels, "1", tocash);
+           // await _cacheService.PutCacheValue(CachedEntity.Hotels, "1", tocash);
 
 
             if (hotels == null)

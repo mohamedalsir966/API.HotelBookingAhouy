@@ -18,10 +18,10 @@ namespace Persistence.Repositories
             entity = _context.Set<T>();
         }
 
-        public async Task<List<T>> GetAllQuery(int PageNumber, int PageSize)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<List<T>> GetAllQuery(int PageNumber, int PageSize)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public async Task<T> GetByIdQuery(Guid? id)
         {
